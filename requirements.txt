@@ -2,7 +2,7 @@ asttokens==2.4.0
 backcall==0.2.0
 blinker==1.5.0
 cffi==1.15.1
-click==8.1.7
+click==8.0.4
 colorama==0.4.6
 comm==0.1.4
 cryptography==41.0.4
