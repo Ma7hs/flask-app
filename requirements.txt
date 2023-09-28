@@ -1,6 +1,6 @@
 asttokens==2.4.0
 backcall==0.2.0
-blinker==1.6.2
+blinker==1.5.0
 cffi==1.15.1
 click==8.1.7
 colorama==0.4.6
