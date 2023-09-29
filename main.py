@@ -46,7 +46,7 @@ def consulta():
     except oracledb.DatabaseError as e:
         return jsonify({'error': str(e)})
 
-@app.route('/usuario', methods=['POST', 'GET'])
+@app.route('/usuario', methods=['POST'])
 def inserir_usuario():
     try:
         data = request.get_json()
@@ -64,7 +64,11 @@ def inserir_usuario():
         finalidade_credito = data['finalidade_credito']
         qtd_credito = data['qtd_credito']
 
-        query = "INSERT INTO ter_usuario (datahora, nome, documento, email, tipo_garantia, finalidade_credito, qtd_credito) VALUES (:datahora, :nome, :documento, :email, :tipo_garantia, :finalidade_credito, :qtd_credito)"
+        query = """
+            INSERT INTO ter_usuario (datahora, nome, documento, email, tipo_garantia, finalidade_credito, qtd_credito)
+            VALUES (TO_TIMESTAMP(:datahora, 'YYYY-MM-DD"T"HH24:MI:SS.FF3"Z"'), :nome, :documento, :email, :tipo_garantia, :finalidade_credito, :qtd_credito)
+        """
+        
         cursor.execute(query, {
             'datahora': datahora,
             'nome': nome,
@@ -77,8 +81,6 @@ def inserir_usuario():
 
         connection.commit()
         cursor.close()
-
-        # Liberar a conexão de volta ao pool
         connection_pool.release(connection)
 
         return jsonify({'message': 'Inserção bem-sucedida'})
